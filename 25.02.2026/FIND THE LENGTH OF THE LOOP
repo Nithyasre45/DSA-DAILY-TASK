@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int val) {
+        data = val;
+        next = null;
+    }
+}
+public class Main {
+    static Node head = null;
+
+// Insert at end
+    static void insert(int val) {
+        Node newNode = new Node(val);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+    }
+
+// Create loop at given position
+    static void createLoop(int pos) {
+        if (pos == 0) return;
+
+        Node newNode = head;
+        Node temp = head;
+        int count = 1;
+
+// Find loop node
+        while (count < pos) {
+            newNode = newNode.next;
+            count++;
+        }
+
+// Go to last node
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+// Create loop
+        temp.next = newNode;
+    }
+
+// Find loop length
+    static int findLoopLength() {
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                int count = 1;
+                Node temp = slow;
+
+                while (temp.next != slow) {
+                    temp = temp.next;
+                    count++;
+                }
+
+                return count;
+            }
+        }
+
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter elements (-1 to stop):");
+        while (true) {
+            int val = sc.nextInt();
+            if (val == -1) break;
+            insert(val);
+        }
+        System.out.println("Enter position to create loop (0 for no loop):");
+        int pos = sc.nextInt();
+        createLoop(pos);
+        int length = findLoopLength();
+        if (length > 0)
+            System.out.println("Loop Length: " + length);
+        else
+            System.out.println("No Loop");
+    }
+}
