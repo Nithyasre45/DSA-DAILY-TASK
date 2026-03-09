@@ -1,0 +1,37 @@
+import java.util.*;
+class Node{
+    int data;
+    Node left;
+    Node right;
+    
+Node(int data){
+    this.data=data;
+    this.left=null;
+    this.right=null;
+}
+}
+
+class Binarytree{
+    
+static int height(Node root){
+    if(root==null)
+    return 0;
+    
+    int leftHeight=height(root.left);
+    int rightHeight=height(root.right);
+    
+    return Math.max(leftHeight,rightHeight) + 1;
+}
+
+public static void main(String[] args){
+    Scanner sc=new Scanner(System.in);
+    Binarytree bt=new Binarytree();
+    Node root=new Node(sc.nextInt());
+    root.left=new Node(sc.nextInt());
+    root.right=new Node(sc.nextInt());
+    root.left.left=new Node(sc.nextInt());
+    root.left.right=new Node(sc.nextInt());
+    int h=height(root);
+    System.out.println("Height of tree: "+h);
+}
+}
